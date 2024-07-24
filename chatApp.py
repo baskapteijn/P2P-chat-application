@@ -131,10 +131,10 @@ class ChatClient(Frame):
         while 1:
             try:
                 data = client_soc.recv(self.buffsize)
-                if not data:
+                if not data and data != b'':
                     break
-                self.add_chat("%s:%s" % client_addr, data)
-            except:
+                self.add_chat("%s:%s" % client_addr, data.decode('utf-8'))
+            except Exception as e:
                 break
         self.remove_client(client_soc)
         client_soc.close()
